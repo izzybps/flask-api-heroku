@@ -14,7 +14,7 @@ def get_expenses_by_year(year):
     chrome_opt.add_argument('--disable-dev-sh--usage')
 
     # Set up the Chrome WebDriver object
-    driver = webdriver.Chrome(options=chrome_opt)
+    driver = webdriver.Remote("https://selenium-standalone-test.onrender.com/wd/hub", options=chrome_opt)
 
     # Navigate to the website with the button you want to click
     driver.get("https://transparencia.tce.ce.gov.br/portal/paginas/execucao-Orcamentaria-da-Despesa.xhtml")
