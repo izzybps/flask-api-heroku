@@ -1,25 +1,23 @@
 from flask import Flask, request, jsonify
+from robotTce import *
 app = Flask(__name__)
 
 
-@app.route('/getmsg/', methods=['GET'])
+@app.route('/api/despesas/', methods=['GET'])
 def respond():
     # Retrieve the name from the url parameter /getmsg/?name=
-    name = request.args.get("name", None)
+    year = request.args.get("ano", None)
 
     # For debugging
-    print(f"Received: {name}")
+    print(f"Received: {year}")
 
     response = {}
 
     # Check if the user sent a name at all
-    if not name:
+    if not year:
         response["ERROR"] = "No name found. Please send a name."
-    # Check if the user entered a number
-    elif str(name).isdigit():
-        response["ERROR"] = "The name can't be numeric. Please send a string."
     else:
-        response["MESSAGE"] = f"Welcome {name} to our awesome API!"
+        response["MESSAGE"] = get_expenses_by_year(year)
 
     # Return the response in json format
     return jsonify(response)
