@@ -14,7 +14,7 @@ def get_expenses_by_year(year):
     chrome_opt.add_argument('--disable-dev-sh--usage')
 
     # Set up the Chrome WebDriver object
-    driver = webdriver.Remote("https://selenium-standalone-test.onrender.com/wd/hub", options=chrome_opt)
+    driver = webdriver.Remote("https://a3bc-2804-d59-a1fa-200-2dc8-807b-2d05-8f19.sa.ngrok.io", options=chrome_opt)
 
     # Navigate to the website with the button you want to click
     driver.get("https://transparencia.tce.ce.gov.br/portal/paginas/execucao-Orcamentaria-da-Despesa.xhtml")
@@ -69,12 +69,13 @@ def get_expenses_by_year(year):
             for idx, td in enumerate(tds):
                 obj[titles[idx]] = td.text
             values.append(obj)
+        driver.quit()
         return values
     else:
+        driver.quit()
         return json.dumps({"error": "Table not found"})
     
 
     # time.sleep(10)
 
     # Close the WebDriver
-    driver.quit()
