@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import threading
 from robotTce import *
 app = Flask(__name__)
 
@@ -16,7 +17,7 @@ def respond():
     # Check if the user sent a name at all
     if not year:
         response["ERROR"] = "No name found. Please send a name."
-    else:
+    else:        
         response["MESSAGE"] = get_expenses_by_year(year)
 
     # Return the response in json format

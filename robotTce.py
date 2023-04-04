@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
+import threading
 import json
 import time
 
@@ -58,12 +59,13 @@ def get_expenses_by_year(year):
     titles = []
     values = []
     if table:
+        # def threaded_work():
         table_head = table.find_elements(By.TAG_NAME, "th")
         for th in table_head:
             titles.append(th.text)
         table_body = table.find_element(By.TAG_NAME, "tbody")
         rows = table_body.find_elements(By.TAG_NAME, "tr")
-        for row in rows:
+        for row in rows[0:2]:
             tds = row.find_elements(By.TAG_NAME, "td")
             obj = {}
             for idx, td in enumerate(tds):
@@ -71,6 +73,8 @@ def get_expenses_by_year(year):
             values.append(obj)
         driver.quit()
         return values
+        # thread = threading.Thread(target=threaded_work)
+        # thread.start()
     else:
         driver.quit()
         return json.dumps({"error": "Table not found"})
